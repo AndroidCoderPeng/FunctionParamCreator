@@ -1,0 +1,37 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the com.pengxh.plugin. It should be FQN. It cannot be changed between the com.pengxh.plugin versions. -->
+    <id>com.pengxh.plugin</id>
+
+    <!-- Public com.pengxh.plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>FunctionParamCreator</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="290677893@qq.com" url="https://www.yourcompany.com">Casic</vendor>
+
+    <!-- Description of the com.pengxh.plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description>这是一个根据JSONObject格式的字符串,自动生成方法形参.本插件只适用 Intellij IDEA 和 Android Studio 工具
+    </description>
+
+    <!-- Product and com.pengxh.plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Extension points defined by the com.pengxh.plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+
+    </extensions>
+
+    <!-- action配置，按钮展示在哪里需要在这配置 -->
+    <actions>
+        <action id="Plugin.FunctionParamCreator" class="com.pengxh.plugin.FunctionParamCreator" text="形参构造器"
+                icon="AllIcons.Nodes.Parameter">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="control P"/>
+        </action>
+    </actions>
+</idea-plugin>
