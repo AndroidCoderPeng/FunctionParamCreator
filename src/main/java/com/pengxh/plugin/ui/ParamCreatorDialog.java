@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -20,9 +21,11 @@ public class ParamCreatorDialog extends DialogWrapper {
     private JPanel contentPane;
     private JButton copyButton;
     private JButton generateButton;
-    private JButton settingButton;
     private JTextArea jsonTextArea;
     private JTextArea paramsTextArea;
+    private JRadioButton jsRadioButton;
+    private JRadioButton javaRadioButton;
+    private JRadioButton kotlinRadioButton;
 
     public ParamCreatorDialog(@Nullable Project project) {
         super(project);
@@ -103,18 +106,34 @@ public class ParamCreatorDialog extends DialogWrapper {
                 Messages.showInfoMessage("形参复制成功", "温馨提示");
             }
         });
-
-        settingButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Messages.showInfoMessage("未实现", "温馨提示");
-            }
-        });
     }
 
     @Override
     protected @Nullable JComponent createCenterPanel() {
-        contentPane.setPreferredSize(new Dimension(600, 400));
+        contentPane.setPreferredSize(new Dimension(700, 700));
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(jsRadioButton);
+        buttonGroup.add(javaRadioButton);
+        buttonGroup.add(kotlinRadioButton);
         return contentPane;
+    }
+
+    @Override
+    protected Action @NotNull [] createActions() {
+        return new Action[]{new CancelAction()};
+    }
+
+    /**
+     * 自定义默认按钮Action，去掉OK按钮
+     */
+    private class CancelAction extends DialogWrapperAction {
+        public CancelAction() {
+            super("Cancel");
+        }
+
+        @Override
+        protected void doAction(ActionEvent e) {
+            close(CANCEL_EXIT_CODE);
+        }
     }
 }
