@@ -13,7 +13,7 @@
     <!-- Description of the com.pengxh.plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description>这是一个根据JSONObject格式的字符串,自动生成方法形参.本插件只适用 Intellij IDEA 和 Android Studio 工具
+    <description>这是一个根据JSONObject格式的字符串,自动生成方法形参.本插件适用 Intellij IDEA 和 Android Studio 等工具
     </description>
 
     <!-- Product and com.pengxh.plugin compatibility requirements.

@@ -85,6 +85,7 @@ public class ParamCreatorDialog extends DialogWrapper {
         ArrayList<String> types = new ArrayList<>();
 
         //TODO 生成JavaScript形参
+        Messages.showInfoMessage("未实现", "温馨提示");
     }
 
     private void generateJavaParam(JSONObject jsonObject, Set<String> keySet) {
