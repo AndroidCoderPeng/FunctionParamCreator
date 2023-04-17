@@ -48,46 +48,15 @@ public class ParamCreatorDialog extends DialogWrapper {
                     return;
                 }
 
-                //保存Json里面的Key
-                ArrayList<String> keys = new ArrayList<>(keySet);
-
-                //判断Json里面的Value类型
-                ArrayList<String> types = new ArrayList<>();
-                jsonObject.values().forEach(value -> {
-                    if (value.toString().isEmpty()) {
-                        types.add("String");
-                    } else {
-                        if (value instanceof String) {
-                            types.add("String");
-                        } else if (value instanceof Short) {
-                            types.add("Short");
-                        } else if (value instanceof Integer) {
-                            types.add("Integer");
-                        } else if (value instanceof Long) {
-                            types.add("Long");
-                        } else if (value instanceof Float) {
-                            types.add("Float");
-                        } else if (value instanceof Double) {
-                            types.add("Double");
-                        } else if (value instanceof Boolean) {
-                            types.add("Boolean");
-                        } else {
-                            types.add("Array<String>");
-                        }
-                    }
-                });
-
-                //组合成请求参数
-                StringBuilder paramBuilder = new StringBuilder();
-                for (int i = 0; i < keys.size(); i++) {
-                    StringBuilder builder = new StringBuilder();
-                    builder.append(keys.get(i)).append(": ").append(types.get(i));
-                    if (i != keys.size() - 1) {
-                        builder.append(",").append("\r\n");
-                    }
-                    paramBuilder.append(builder);
+                if (jsRadioButton.isSelected()) {
+                    generateJavaScriptParam(jsonObject, keySet);
+                } else if (javaRadioButton.isSelected()) {
+                    generateJavaParam(jsonObject, keySet);
+                } else if (kotlinRadioButton.isSelected()) {
+                    generateKotlinParam(jsonObject, keySet);
+                } else {
+                    throw new IllegalArgumentException();
                 }
-                paramsTextArea.setText(paramBuilder.toString());
             }
         });
 
@@ -106,6 +75,103 @@ public class ParamCreatorDialog extends DialogWrapper {
                 Messages.showInfoMessage("形参复制成功", "温馨提示");
             }
         });
+    }
+
+    private void generateJavaScriptParam(JSONObject jsonObject, Set<String> keySet) {
+        //保存Json里面的Key
+        ArrayList<String> keys = new ArrayList<>(keySet);
+
+        //判断Json里面的Value类型
+        ArrayList<String> types = new ArrayList<>();
+
+        //TODO 生成JavaScript形参
+    }
+
+    private void generateJavaParam(JSONObject jsonObject, Set<String> keySet) {
+        //保存Json里面的Key
+        ArrayList<String> keys = new ArrayList<>(keySet);
+
+        //判断Json里面的Value类型
+        ArrayList<String> types = new ArrayList<>();
+
+        jsonObject.values().forEach(value -> {
+            if (value.toString().isEmpty()) {
+                types.add("String");
+            } else {
+                if (value instanceof String) {
+                    types.add("String");
+                } else if (value instanceof Short) {
+                    types.add("short");
+                } else if (value instanceof Integer) {
+                    types.add("int");
+                } else if (value instanceof Long) {
+                    types.add("long");
+                } else if (value instanceof Float) {
+                    types.add("float");
+                } else if (value instanceof Double) {
+                    types.add("double");
+                } else if (value instanceof Boolean) {
+                    types.add("boolean");
+                } else {
+                    types.add("String[]");
+                }
+            }
+        });
+
+        //组合成请求参数
+        StringBuilder paramBuilder = new StringBuilder();
+        for (int i = 0; i < keys.size(); i++) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(types.get(i)).append(" ").append(keys.get(i));
+            if (i != keys.size() - 1) {
+                builder.append(",").append("\r\n");
+            }
+            paramBuilder.append(builder);
+        }
+        paramsTextArea.setText(paramBuilder.toString());
+    }
+
+    private void generateKotlinParam(JSONObject jsonObject, Set<String> keySet) {
+        //保存Json里面的Key
+        ArrayList<String> keys = new ArrayList<>(keySet);
+
+        //判断Json里面的Value类型
+        ArrayList<String> types = new ArrayList<>();
+        jsonObject.values().forEach(value -> {
+            if (value.toString().isEmpty()) {
+                types.add("String");
+            } else {
+                if (value instanceof String) {
+                    types.add("String");
+                } else if (value instanceof Short) {
+                    types.add("Short");
+                } else if (value instanceof Integer) {
+                    types.add("Integer");
+                } else if (value instanceof Long) {
+                    types.add("Long");
+                } else if (value instanceof Float) {
+                    types.add("Float");
+                } else if (value instanceof Double) {
+                    types.add("Double");
+                } else if (value instanceof Boolean) {
+                    types.add("Boolean");
+                } else {
+                    types.add("Array<String>");
+                }
+            }
+        });
+
+        //组合成请求参数
+        StringBuilder paramBuilder = new StringBuilder();
+        for (int i = 0; i < keys.size(); i++) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(keys.get(i)).append(": ").append(types.get(i));
+            if (i != keys.size() - 1) {
+                builder.append(",").append("\r\n");
+            }
+            paramBuilder.append(builder);
+        }
+        paramsTextArea.setText(paramBuilder.toString());
     }
 
     @Override
