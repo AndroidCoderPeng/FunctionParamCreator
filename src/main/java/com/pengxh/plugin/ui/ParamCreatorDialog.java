@@ -15,22 +15,28 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 
 public class ParamCreatorDialog extends DialogWrapper {
     private JPanel contentPane;
-    private JButton copyButton;
     private JButton generateButton;
     private JTextArea jsonTextArea;
     private JTextArea paramsTextArea;
+    private JTextArea requestTextArea;
     private JRadioButton jsRadioButton;
     private JRadioButton javaRadioButton;
     private JRadioButton kotlinRadioButton;
+    private JRadioButton gsonRadioButton;
+    private JRadioButton fastJSONRadioButton;
+    private JButton copyParamButton;
+    private JButton copyBodyButton;
 
     public ParamCreatorDialog(@Nullable Project project) {
         super(project);
         init();
         setTitle("形参构造器");
+        setModal(false);
 
         generateButton.addActionListener(new ActionListener() {
             @Override
@@ -60,7 +66,7 @@ public class ParamCreatorDialog extends DialogWrapper {
             }
         });
 
-        copyButton.addActionListener(new ActionListener() {
+        copyParamButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (paramsTextArea.getText().isBlank()) {
@@ -73,6 +79,24 @@ public class ParamCreatorDialog extends DialogWrapper {
                 Transferable ts = new StringSelection(paramsTextArea.getText());
                 clipboard.setContents(ts, null);
                 Messages.showInfoMessage("形参复制成功", "温馨提示");
+                dispose();
+            }
+        });
+
+        copyBodyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (requestTextArea.getText().isBlank()) {
+                    Messages.showErrorDialog("无法复制空RequestBody", "温馨提示");
+                    return;
+                }
+                //复制到剪贴板
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                //封装为粘贴板对象
+                Transferable ts = new StringSelection(requestTextArea.getText());
+                clipboard.setContents(ts, null);
+                Messages.showInfoMessage("RequestBody复制成功", "温馨提示");
+                dispose();
             }
         });
     }
@@ -91,6 +115,10 @@ public class ParamCreatorDialog extends DialogWrapper {
     private void generateJavaParam(JSONObject jsonObject, Set<String> keySet) {
         //保存Json里面的Key
         ArrayList<String> keys = new ArrayList<>(keySet);
+
+        //保存Json里面的值
+        Object[] objects = jsonObject.values().toArray();
+        ArrayList<Object> values = new ArrayList<>(Arrays.asList(objects));
 
         //判断Json里面的Value类型
         ArrayList<String> types = new ArrayList<>();
@@ -130,11 +158,53 @@ public class ParamCreatorDialog extends DialogWrapper {
             paramBuilder.append(builder);
         }
         paramsTextArea.setText(paramBuilder.toString());
+
+        //生成RequestBody
+        if (gsonRadioButton.isSelected()) {
+            generateJavaGsonRequestBody(keys, values);
+        } else if (fastJSONRadioButton.isSelected()) {
+            generateJavaFastJsonRequestBody(keys);
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void generateJavaGsonRequestBody(ArrayList<String> keys, ArrayList<Object> values) {
+        StringBuilder bodyBuilder = new StringBuilder();
+        bodyBuilder.append("JsonObject param = new JsonObject();").append("\r\n");
+        for (int i = 0; i < keys.size(); i++) {
+            String key = keys.get(i);
+            Object o = values.get(i);
+            if (o instanceof String || o instanceof Short || o instanceof Integer || o instanceof Long ||
+                    o instanceof Float || o instanceof Double || o instanceof Boolean) {
+                bodyBuilder.append("param.addProperty(\"").append(key).append("\", ").append(key).append(");").append("\r\n");
+            } else {
+                bodyBuilder.append("param.add(\"").append(key).append("\", ").append("new Gson().toJsonTree(").append(key).append(", new TypeToken<String[]>() {}.getType()).getAsJsonArray()").append(");").append("\r\n");
+            }
+        }
+        bodyBuilder.append("MediaType mediaType = MediaType.parse(\"application/json; charset=utf-8\");").append("\r\n");
+        bodyBuilder.append("RequestBody body = RequestBody.create(mediaType, param.toString());").append("\r\n");
+        requestTextArea.setText(bodyBuilder.toString());
+    }
+
+    private void generateJavaFastJsonRequestBody(ArrayList<String> keys) {
+        StringBuilder bodyBuilder = new StringBuilder();
+        bodyBuilder.append("JSONObject param = new JSONObject();").append("\r\n");
+        for (String key : keys) {
+            bodyBuilder.append("param.put(\"").append(key).append("\", ").append(key).append(");").append("\r\n");
+        }
+        bodyBuilder.append("MediaType mediaType = MediaType.parse(\"application/json; charset=utf-8\");").append("\r\n");
+        bodyBuilder.append("RequestBody body = RequestBody.create(mediaType, param.toString());").append("\r\n");
+        requestTextArea.setText(bodyBuilder.toString());
     }
 
     private void generateKotlinParam(JSONObject jsonObject, Set<String> keySet) {
         //保存Json里面的Key
         ArrayList<String> keys = new ArrayList<>(keySet);
+
+        //保存Json里面的值
+        Object[] objects = jsonObject.values().toArray();
+        ArrayList<Object> values = new ArrayList<>(Arrays.asList(objects));
 
         //判断Json里面的Value类型
         ArrayList<String> types = new ArrayList<>();
@@ -147,7 +217,7 @@ public class ParamCreatorDialog extends DialogWrapper {
                 } else if (value instanceof Short) {
                     types.add("Short");
                 } else if (value instanceof Integer) {
-                    types.add("Integer");
+                    types.add("Int");
                 } else if (value instanceof Long) {
                     types.add("Long");
                 } else if (value instanceof Float) {
@@ -173,15 +243,55 @@ public class ParamCreatorDialog extends DialogWrapper {
             paramBuilder.append(builder);
         }
         paramsTextArea.setText(paramBuilder.toString());
+
+        //生成RequestBody
+        if (gsonRadioButton.isSelected()) {
+            generateKotlinGsonRequestBody(keys, values);
+        } else if (fastJSONRadioButton.isSelected()) {
+            generateKotlinFastJsonRequestBody(keys);
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void generateKotlinGsonRequestBody(ArrayList<String> keys, ArrayList<Object> values) {
+        StringBuilder bodyBuilder = new StringBuilder();
+        bodyBuilder.append("val param = JsonObject()").append("\r\n");
+        for (int i = 0; i < keys.size(); i++) {
+            String key = keys.get(i);
+            Object o = values.get(i);
+            if (o instanceof String || o instanceof Short || o instanceof Integer || o instanceof Long ||
+                    o instanceof Float || o instanceof Double || o instanceof Boolean) {
+                bodyBuilder.append("param.addProperty(\"").append(key).append("\", ").append(key).append(")").append("\r\n");
+            } else {
+                bodyBuilder.append("param.add(\"").append(key).append("\", ").append("Gson().toJsonTree(").append(key).append(", object : TypeToken<Array<String>>() {}.type).asJsonArray").append(")").append("\r\n");
+            }
+        }
+        bodyBuilder.append("val requestBody = param.toString().toRequestBody(\"application/json;charset=UTF-8\".toMediaType())").append("\r\n");
+        requestTextArea.setText(bodyBuilder.toString());
+    }
+
+    private void generateKotlinFastJsonRequestBody(ArrayList<String> keys) {
+        StringBuilder bodyBuilder = new StringBuilder();
+        bodyBuilder.append("val param = JSONObject()").append("\r\n");
+        for (String key : keys) {
+            bodyBuilder.append("param.put(\"").append(key).append("\", ").append(key).append(")").append("\r\n");
+        }
+        bodyBuilder.append("val requestBody = param.toString().toRequestBody(\"application/json;charset=UTF-8\".toMediaType())").append("\r\n");
+        requestTextArea.setText(bodyBuilder.toString());
     }
 
     @Override
     protected @Nullable JComponent createCenterPanel() {
-        contentPane.setPreferredSize(new Dimension(700, 700));
+        contentPane.setPreferredSize(new Dimension(800, 500));
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(jsRadioButton);
         buttonGroup.add(javaRadioButton);
         buttonGroup.add(kotlinRadioButton);
+
+        ButtonGroup requestButtonGroup = new ButtonGroup();
+        requestButtonGroup.add(gsonRadioButton);
+        requestButtonGroup.add(fastJSONRadioButton);
         return contentPane;
     }
 
