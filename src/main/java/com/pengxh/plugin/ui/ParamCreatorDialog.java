@@ -24,7 +24,6 @@ public class ParamCreatorDialog extends DialogWrapper {
     private JTextArea jsonTextArea;
     private JTextArea paramsTextArea;
     private JTextArea requestTextArea;
-    private JRadioButton jsRadioButton;
     private JRadioButton javaRadioButton;
     private JRadioButton kotlinRadioButton;
     private JRadioButton gsonRadioButton;
@@ -56,12 +55,13 @@ public class ParamCreatorDialog extends DialogWrapper {
                     return;
                 }
 
-                if (jsRadioButton.isSelected()) {
-                    generateJavaScriptParam(jsonObject, keySet);
-                } else if (javaRadioButton.isSelected()) {
-                    generateJavaParam(jsonObject, keySet);
+                //保存Json里面的Key
+                ArrayList<String> keys = new ArrayList<>(keySet);
+
+                if (javaRadioButton.isSelected()) {
+                    generateJavaParam(jsonObject, keys);
                 } else if (kotlinRadioButton.isSelected()) {
-                    generateKotlinParam(jsonObject, keySet);
+                    generateKotlinParam(jsonObject, keys);
                 } else {
                     throw new IllegalArgumentException();
                 }
@@ -101,21 +101,7 @@ public class ParamCreatorDialog extends DialogWrapper {
         });
     }
 
-    private void generateJavaScriptParam(JSONObject jsonObject, Set<String> keySet) {
-        //保存Json里面的Key
-        ArrayList<String> keys = new ArrayList<>(keySet);
-
-        //判断Json里面的Value类型
-        ArrayList<String> types = new ArrayList<>();
-
-        //TODO 生成JavaScript形参
-        Messages.showInfoMessage("未实现", "温馨提示");
-    }
-
-    private void generateJavaParam(JSONObject jsonObject, Set<String> keySet) {
-        //保存Json里面的Key
-        ArrayList<String> keys = new ArrayList<>(keySet);
-
+    private void generateJavaParam(JSONObject jsonObject, ArrayList<String> keys) {
         //保存Json里面的值
         Object[] objects = jsonObject.values().toArray();
         ArrayList<Object> values = new ArrayList<>(Arrays.asList(objects));
@@ -206,10 +192,7 @@ public class ParamCreatorDialog extends DialogWrapper {
         requestTextArea.setText(bodyBuilder.toString());
     }
 
-    private void generateKotlinParam(JSONObject jsonObject, Set<String> keySet) {
-        //保存Json里面的Key
-        ArrayList<String> keys = new ArrayList<>(keySet);
-
+    private void generateKotlinParam(JSONObject jsonObject, ArrayList<String> keys) {
         //保存Json里面的值
         Object[] objects = jsonObject.values().toArray();
         ArrayList<Object> values = new ArrayList<>(Arrays.asList(objects));
@@ -301,7 +284,6 @@ public class ParamCreatorDialog extends DialogWrapper {
     protected @Nullable JComponent createCenterPanel() {
         contentPane.setPreferredSize(new Dimension(800, 500));
         ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(jsRadioButton);
         buttonGroup.add(javaRadioButton);
         buttonGroup.add(kotlinRadioButton);
 
