@@ -31,6 +31,8 @@ public class ParamCreatorDialog extends DialogWrapper {
     private JRadioButton fastJSONRadioButton;
     private JButton copyParamButton;
     private JButton copyBodyButton;
+    private JCheckBox integerCheckBox;
+    private JCheckBox booleanCheckBox;
 
     public ParamCreatorDialog(@Nullable Project project) {
         super(project);
@@ -78,8 +80,7 @@ public class ParamCreatorDialog extends DialogWrapper {
                 //封装为粘贴板对象
                 Transferable ts = new StringSelection(paramsTextArea.getText());
                 clipboard.setContents(ts, null);
-                Messages.showInfoMessage("形参复制成功", "温馨提示");
-                dispose();
+                Messages.showInfoMessage("形参复制成功，无需关闭对话框", "温馨提示");
             }
         });
 
@@ -95,8 +96,7 @@ public class ParamCreatorDialog extends DialogWrapper {
                 //封装为粘贴板对象
                 Transferable ts = new StringSelection(requestTextArea.getText());
                 clipboard.setContents(ts, null);
-                Messages.showInfoMessage("RequestBody复制成功", "温馨提示");
-                dispose();
+                Messages.showInfoMessage("RequestBody复制成功，无需关闭对话框", "温馨提示");
             }
         });
     }
@@ -132,7 +132,11 @@ public class ParamCreatorDialog extends DialogWrapper {
                 } else if (value instanceof Short) {
                     types.add("short");
                 } else if (value instanceof Integer) {
-                    types.add("int");
+                    if (integerCheckBox.isSelected()) {
+                        types.add("String");
+                    } else {
+                        types.add("int");
+                    }
                 } else if (value instanceof Long) {
                     types.add("long");
                 } else if (value instanceof Float) {
@@ -140,7 +144,11 @@ public class ParamCreatorDialog extends DialogWrapper {
                 } else if (value instanceof Double) {
                     types.add("double");
                 } else if (value instanceof Boolean) {
-                    types.add("boolean");
+                    if (booleanCheckBox.isSelected()) {
+                        types.add("String");
+                    } else {
+                        types.add("boolean");
+                    }
                 } else {
                     types.add("String[]");
                 }
@@ -217,7 +225,11 @@ public class ParamCreatorDialog extends DialogWrapper {
                 } else if (value instanceof Short) {
                     types.add("Short");
                 } else if (value instanceof Integer) {
-                    types.add("Int");
+                    if (integerCheckBox.isSelected()) {
+                        types.add("String");
+                    } else {
+                        types.add("Int");
+                    }
                 } else if (value instanceof Long) {
                     types.add("Long");
                 } else if (value instanceof Float) {
@@ -225,7 +237,11 @@ public class ParamCreatorDialog extends DialogWrapper {
                 } else if (value instanceof Double) {
                     types.add("Double");
                 } else if (value instanceof Boolean) {
-                    types.add("Boolean");
+                    if (booleanCheckBox.isSelected()) {
+                        types.add("String");
+                    } else {
+                        types.add("Boolean");
+                    }
                 } else {
                     types.add("Array<String>");
                 }
