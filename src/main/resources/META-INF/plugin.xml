@@ -13,7 +13,31 @@
     <!-- Description of the com.pengxh.plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description>这是一个根据JSONObject格式的字符串,自动生成方法形参.本插件适用 Intellij IDEA 和 Android Studio 等工具
+    <description>
+        <![CDATA[
+            <ul>
+              <li>这是一个根据JSONObject格式的字符串，自动生成方法形参以及Http请求Body的工具。</li>
+              <li>兼容Java和Kotlin两种语言，并且支持Google官方Gson和阿里巴巴FastJson生成RequestBody。</li>
+              <li>本插件适用 Intellij IDEA 和 Android Studio 等工具</li>
+            </ul>
+            <ul>
+              <li>
+                <a href="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/0.png">
+                    <img src="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/0.png">
+                </a>
+              </li>
+              <li>
+                <a href="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/1.png">
+                    <img src="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/1.png">
+                </a>
+              </li>
+              <li>
+                <a href="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/2.png">
+                    <img src="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/2.png">
+                </a>
+              </li>
+            </ui>
+        ]]>
     </description>
 
     <!-- Product and com.pengxh.plugin compatibility requirements.
