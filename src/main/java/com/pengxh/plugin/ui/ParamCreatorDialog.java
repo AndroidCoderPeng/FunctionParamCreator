@@ -282,7 +282,7 @@ public class ParamCreatorDialog extends DialogWrapper {
 
     @Override
     protected @Nullable JComponent createCenterPanel() {
-        contentPane.setPreferredSize(new Dimension(800, 500));
+        contentPane.setPreferredSize(new Dimension(1280, 720));
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(javaRadioButton);
         buttonGroup.add(kotlinRadioButton);
@@ -293,22 +293,11 @@ public class ParamCreatorDialog extends DialogWrapper {
         return contentPane;
     }
 
+    /**
+     * 重写默认按钮，去掉默认按钮
+     */
     @Override
     protected Action @NotNull [] createActions() {
-        return new Action[]{new CancelAction()};
-    }
-
-    /**
-     * 自定义默认按钮Action，去掉OK按钮
-     */
-    private class CancelAction extends DialogWrapperAction {
-        public CancelAction() {
-            super("Cancel");
-        }
-
-        @Override
-        protected void doAction(ActionEvent e) {
-            close(CANCEL_EXIT_CODE);
-        }
+        return new Action[]{};
     }
 }
