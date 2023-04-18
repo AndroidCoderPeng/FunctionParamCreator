@@ -16,27 +16,32 @@
     <description>
         <![CDATA[
             <ul>
-              <li>这是一个根据JSONObject格式的字符串，自动生成方法形参以及Http请求Body的工具。</li>
-              <li>兼容Java和Kotlin两种语言，并且支持Google官方Gson和阿里巴巴FastJson生成RequestBody。</li>
-              <li>本插件适用 Intellij IDEA 和 Android Studio 等工具</li>
+                <li>This is a tool that generates method parameters and Http request body based on JSONObject format.</li>
+                <li>This is a tool that can be used to develop applications that support both Java and Kotlin, and also generate requests' body based on Google's Gson or Alibaba's FastJson.</li>
+                <li>This plugin is suitable for tools such as IntelliJ IDEA and Android Studio.</li>
             </ul>
             <ul>
-              <li>
-                <a href="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/0.png">
-                    <img src="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/0.png">
-                </a>
-              </li>
-              <li>
-                <a href="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/1.png">
-                    <img src="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/1.png">
-                </a>
-              </li>
-              <li>
-                <a href="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/2.png">
-                    <img src="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/2.png">
-                </a>
-              </li>
-            </ui>
+                <li>这是一个根据JSONObject格式的字符串，自动生成方法形参以及Http请求Body的工具。</li>
+                <li>兼容Java和Kotlin两种语言，并且支持Google官方Gson和阿里巴巴FastJson生成RequestBody。</li>
+                <li>本插件适用 Intellij IDEA 和 Android Studio 等工具</li>
+            </ul>
+            <ul>
+                <li>
+                    <a href="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/20230418/0.png">
+                        <img src="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/20230418/0.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/20230418/1.png">
+                        <img src="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/20230418/1.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/20230418/2.png">
+                        <img src="https://gitee.com/AndroidCoderPeng/OpenCar/raw/master/20230418/2.png">
+                    </a>
+                </li>
+            </ul>
         ]]>
     </description>
 
