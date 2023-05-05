@@ -11,4 +11,5 @@
 3、安装插件（Settings --> Plugins --> Installed --> Install Plugin form Disk…）
 
 4、如果在Tools里面看不到如下图选项，重启IDEA就行了
+
 ![installed.png](images%2Finstalled.png)
