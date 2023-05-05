@@ -282,7 +282,7 @@ public class ParamCreatorDialog extends DialogWrapper {
 
     @Override
     protected @Nullable JComponent createCenterPanel() {
-        contentPane.setPreferredSize(new Dimension(1280, 720));
+        contentPane.setPreferredSize(new Dimension(1000, 600));
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(javaRadioButton);
         buttonGroup.add(kotlinRadioButton);
