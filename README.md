@@ -13,7 +13,7 @@
 
 4、如果在Tools里面看不到如下图选项，重启IDEA就行了
 
-![installed.png](images%2Finstalled.png)
+![installed.png](images/installed.png)
 
 5、如果安装成功，快捷键无法调出插件，那就是插件快捷键和IDEA现有设置过的快捷键出现了冲突，修改设置快捷键就行了
 
@@ -21,12 +21,12 @@
 
 1、在需要格式化大量参数的地方通过快捷键调出插件界面，如下图：
 
-![initParam.png](images%2FinitParam.png)
+![initParam.png](images/initParam.png)
 
 2、把Http入参Json串填入左侧区域，勾选相应的配置，如下图：
 
-![initJson.png](images%2FinitJson.png)
+![initJson.png](images/initJson.png)
 
 3、最后点击右上角"Generate"按钮即可，如下图：
 
-![generateParam.png](images%2FgenerateParam.png)
+![generateParam.png](images/generateParam.png)
