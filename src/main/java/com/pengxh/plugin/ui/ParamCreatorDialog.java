@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
+import org.apache.http.util.TextUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -42,7 +43,7 @@ public class ParamCreatorDialog extends DialogWrapper {
         generateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (jsonTextArea.getText().isBlank()) {
+                if (TextUtils.isBlank(jsonTextArea.getText())) {
                     Messages.showErrorDialog("参数为空，无法生成形参", "温馨提示");
                     return;
                 }
@@ -71,7 +72,7 @@ public class ParamCreatorDialog extends DialogWrapper {
         copyParamButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (paramsTextArea.getText().isBlank()) {
+                if (TextUtils.isBlank(paramsTextArea.getText())) {
                     Messages.showErrorDialog("无法复制空参数", "温馨提示");
                     return;
                 }
@@ -87,7 +88,7 @@ public class ParamCreatorDialog extends DialogWrapper {
         copyBodyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (requestTextArea.getText().isBlank()) {
+                if (TextUtils.isBlank(requestTextArea.getText())) {
                     Messages.showErrorDialog("无法复制空RequestBody", "温馨提示");
                     return;
                 }
