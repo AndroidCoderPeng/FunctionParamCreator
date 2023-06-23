@@ -1,10 +1,10 @@
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.7.20"
-    id("org.jetbrains.intellij") version "1.13.1"
+    id("org.jetbrains.intellij") version "1.14.1"
 }
 
-group = "com.pengxh.com.pengxh.plugin"
+group = "com.pengxh.plugin"
 version = "1.0.0"
 
 repositories {
@@ -32,7 +32,7 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("202")
+        sinceBuild.set("222")
         untilBuild.set("232.*")
     }
 
