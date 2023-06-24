@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <!-- Unique identifier of the com.pengxh.plugin. It should be FQN. It cannot be changed between the com.pengxh.plugin versions. -->
-    <id>com.pengxh.plugin</id>
+    <id>com.pengxh.plugin.FunctionParamCreator</id>
 
     <!-- Public com.pengxh.plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
@@ -57,7 +57,8 @@
 
     <!-- action配置，按钮展示在哪里需要在这配置 -->
     <actions>
-        <action id="Plugin.FunctionParamCreator" class="com.pengxh.plugin.FunctionParamCreator" text="形参构造器"
+        <action id="com.pengxh.plugin.FunctionParamCreator" class="com.pengxh.plugin.FunctionParamCreator"
+                text="形参构造器"
                 icon="AllIcons.Nodes.Parameter">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="control P"/>
